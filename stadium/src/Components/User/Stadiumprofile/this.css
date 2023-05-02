@@ -1,0 +1,36 @@
+.slides-container {
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .slides-container img {
+    width: 730px;
+    height: 350px;
+    object-fit: fill;
+        position: absolute;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  .slides-container img.active {
+    opacity: 1;
+  }
+  
+  .arrow {
+    position: relative;
+    top: 170px;
+    transform: translateY(-50%);
+    font-size: 40px;
+    color: black;
+    cursor: pointer;
+  }
+  
+  .arrow-left {
+    left: -430px;
+  }
+  
+  .arrow-right {
+    right: -430px;
+  }
+  

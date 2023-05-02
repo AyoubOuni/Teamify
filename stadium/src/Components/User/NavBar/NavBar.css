@@ -1,0 +1,28 @@
+.nav{
+    height:75px;
+    background-color:#1E1E1E
+}
+.margin-left{
+    margin-left:100px;
+}
+.margin-left2{
+    margin-left:170px;
+}
+.margin-left5{
+    margin-left:98px;
+}
+.notactive,.notactive:hover{
+    text-decoration: none;
+    color:white;
+    margin-left: 17px;
+    margin-right: 17px;}
+.active99{
+    color: #0B44FF;
+    margin-left: 17px;
+    margin-right: 17px;
+    text-underline-offset: 7px; 
+}
+.pright{
+    position: relative;
+    right: 20px;
+}

@@ -1,0 +1,33 @@
+.nav{
+    height: 70px;
+    background-color:#1E1E1E;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+.left
+{
+    margin-left: 2%;
+}
+
+.links
+{
+    text-decoration: none;
+    color: white;
+   
+}
+.links:hover
+{
+    color:white;
+    transform: scale(1.1);
+}
+.log-inscri
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 2%;
+    gap: 10px;
+
+}

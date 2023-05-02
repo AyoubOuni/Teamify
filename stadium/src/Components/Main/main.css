@@ -1,0 +1,21 @@
+.main
+{   display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    align-self: center;
+
+    
+}
+.ui-mobile{
+    background: none;
+    overflow-y: hidden !important;
+}
+.ui-mobile .ui-page {
+    background: none;
+    overflow-y: hidden;
+}
+body.ui-mobile-viewport, div.ui-mobile-viewport {
+    overflow-x: hidden;
+    overflow: hidden;
+}

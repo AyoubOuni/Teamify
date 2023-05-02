@@ -1,0 +1,12 @@
+.bg-card{
+    background-color:#D9D9D9 !important;
+}
+.btn-4{
+    font-family: "Helvetica Neue",Helvetica,Arial !important;
+background-color: #0C82EE;
+    border-radius: 23px !important;
+    height: 36px;
+ 
+    border: 1px solid #0C82EE;
+    width: 160px;
+}
