@@ -1,8 +1,11 @@
 
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect, useLayoutEffect} from 'react'
 import './Stadiumprofile.css'
 import Calendar from 'react-calendar';
+import { useParams } from 'react-router-dom';
+
 import {RxDimensions,} from 'react-icons/rx'
+import {IoArrowBackCircleSharp} from 'react-icons/io5'
 import {RiTeamFill,RiQuestionnaireFill} from 'react-icons/ri'
 import {MdFilterAlt} from 'react-icons/md'
 import {GiLightBulb} from 'react-icons/gi'
@@ -18,25 +21,101 @@ import teamify from './../../../Assets/images/Teamify.png'
 import 'react-calendar/dist/Calendar.css';
 import jsPDF from 'jspdf';
 import axios from 'axios';
+import NavBar from '../NavBar/NavBar'
 
-function CardStadium(props) {  
+function Calend() {  
+  let { uid } = useParams();
+  let { id } = useParams();
+  useEffect(() => {
+    fetch('http://localhost:4000/getstadiumbyid', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: id
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then((response) => response.json())
+      .then((rep) => {
+        setStadium(rep[0]);})
+   
+  }, []);
+  const [user, setuser] = useState([]);
+  const [Stadium, setStadium] = useState([]);
 
+  const get=async() =>{
+    await   fetch('http://localhost:4000/getbyid', {
+       method: 'POST',
+       body: JSON.stringify({
+           id:id_user,
+        }),
+        headers: {
+          "Content-Type":"application/json"
+        },
+        
+      
+    })
+    .  then(function(response){
+       return response.json();
+     })
+     .then(function(myJson) {
+      // console.log(myJson[0]);
+       setuser(myJson[0]);
+     });
+    
+    
+    }
         const [calender, setcalender] = useState([]);
+        const [data, setdata] = useState([]);
+        const [ti, sett] = useState([]);
         const [my, setmy] = useState([]);
         const [time, settime] = useState('');
         const [endtime, setendtime] = useState('');
 
         useEffect(()=>{ 
+          get();
           get2();
+          get33();
+          get22();
 
         },[])
-          
+        function getCookie(name) {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+        var id_user=getCookie('user_id')
        
+        const get22=async() =>{
+        await   fetch('http://localhost:4002/stadium/getbyitsid', {
+           method: 'POST',
+           body: JSON.stringify({
+               id:uid,
+            }),
+            headers: {
+              "Content-Type":"application/json"
+            },
+            
+          
+        })
+        .  then(function(response){
+           return response.json();
+         })
+         .then(function(myJson) {
+          console.log(myJson[0].times);
+          sett(myJson[0].times);
+          setdata(myJson[0]);
+          
+         });}
+
+
+
         const get2=async() =>{
         await   fetch('http://localhost:4002/reservation/getbystadium', {
            method: 'POST',
            body: JSON.stringify({
-               id:props.id,
+               id:uid,
             }),
             headers: {
               "Content-Type":"application/json"
@@ -52,13 +131,11 @@ function CardStadium(props) {
           setcalender(myJson);
           
          });}
-
-        const get3=async(a) =>{
-
-          await fetch('http://localhost:4002/reservation/getbystadium', {
+        const get20=async() =>{
+        await   fetch('http://localhost:4002/reservation/getbystadium', {
            method: 'POST',
            body: JSON.stringify({
-               id:a,
+               id:uid,
             }),
             headers: {
               "Content-Type":"application/json"
@@ -73,12 +150,20 @@ function CardStadium(props) {
           // console.log(myJson[0]);
           setcalender(myJson);
           
-         });
-        await   fetch('http://localhost:4002/reservation/getbyuserandstade', {
+         });}
+useLayoutEffect(()=>{
+get33();
+
+
+},[])
+        const get33=() =>{
+
+         
+           fetch('http://localhost:4002/reservation/getbyuserandstade', {
            method: 'POST',
            body: JSON.stringify({
-               id:props.id_user,
-               id_stadium:props.id
+               id:id_user,
+               id_stadium:uid
             }),
             headers: {
               "Content-Type":"application/json"
@@ -89,9 +174,9 @@ function CardStadium(props) {
         .  then(function(response){
            return response.json();
          })
-         .then(async function(myJson) {
+         .then( function(myJson) {
           // console.log(myJson[0]);
-         await setmy(myJson);
+          setmy(myJson);
          });
         
         }
@@ -128,36 +213,7 @@ function CardStadium(props) {
         let parts = selectedDate.split("/");
  setselected (parts[0] + " " + getMonthName(parts[1]) + " " + parts[2])
         }
-        const sendreservation=async() =>{
-                var id_reserv=Math.floor(Math.random() * (100000000000 - 1000000 + 1)) + 1000000;
-                fetch('http://localhost:4002/reservation/add', {
-                        method: 'POST',
-                        body: JSON.stringify({
-                          id:id_reserv ,
-                          id_company: props.id_company,
-                          id_stadium: props.id,
-                          name_stadium: props.nom,
-                          name_company: props.company,
-                          id_user: props.id_user,
-                          name_user: props.user_name,
-                          pdf:`pdf/${id_reserv}/${id_reserv}.pdf`,
-                          date:selectedDate,
-                          hour:time,
-                        }),
-                        headers: {
-                          'Content-Type': 'application/json'
-                        },
-                      })
-                        .then(async() => {
-                                generatePDF(id_reserv,props.company,props.nom,props.user_name,props.id_user)
-                           get2();
-                           get3();
-                        })
-                        .catch(err => console.error(err));
-                    
-      
-        }
-
+        
 console.log(calender)
 function compareTime(time1, time2) {
         const [hours1, minutes1] = time1.split(':').map(Number);
@@ -193,18 +249,22 @@ document.getElementById('rrr').click();
         }
         return `${formattedHour.toString().padStart(2, '0')}:${minute}`;
       };
+   
+ 
       const checkTimes = () => {
         const now = new Date();
         const timeString = now.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' });
      const t=formatTime(timeString);
      console.log(t);
-        return props.times.map((timeObj) => {
+        return ti.map((timeObj) => {
           const { times } = timeObj;
           return times.filter((time) => compareTime(time, t) === -1);
         });
       };
       
       var overs=checkTimes();
+      console.log('over');
+      console.log(overs);
       console.log('over');
       console.log(overs);
 
@@ -267,6 +327,7 @@ const generatePDF = async (id,a,b,c,d) => {
         console.log(response.data);
       }
       
+
       
 
       let history = useNavigate();
@@ -292,54 +353,58 @@ const generatePDF = async (id,a,b,c,d) => {
       
       console.log('before')
       console.log(my)
+      const sendreservation=async() =>{
+        var id_reserv=Math.floor(Math.random() * (100000000000 - 1000000 + 1)) + 1000000;
+        fetch('http://localhost:4002/reservation/add', {
+                method: 'POST',
+                body: JSON.stringify({
+                  id:id_reserv ,
+                  id_company: id,
+                  id_stadium: uid,
+                  name_stadium: data.name,
+                  name_company: Stadium.name,
+                  id_user: user.id,
+                  name_user: user.nom,
+                  pdf:`pdf/${id_reserv}/${id_reserv}.pdf`,
+                  date:selectedDate,
+                  hour:time,
+                }),
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+              })
+                .then(async() => {
+                        generatePDF(id_reserv,Stadium.name,data.name,user.nom + " " + user.prenom,user.id)
+                   get2();
+                   get33();
+                })
+                .catch(err => console.error(err));
+            
+
+}
   return (
-      <div className="card  mt-5 bg-card pt-5" style={{width:'93%'}}>
-<div className="d-flex justify-content-center   ">
- 
+    <>
+    <NavBar username={`${user.nom && user.prenom ? user.nom + " " + user.prenom : "Loading"}`} url={user.url} id={user.id} />
+    <div className='d-flex justify-content-start'>
 
-<span className='h5 pt-4'>{props.nom}</span>
-</div>
-<div className="d-flex justify-content-center mt-3  ">
+    <div className="ms-5 mt-3" style={{cursor:'pointer'}} onClick={()=>{history(`/user/stadium/${id}`)}}><IoArrowBackCircleSharp size={34} /></div>
+    </div>
+    <div className='d-flex justify-content-center'>
 
-<img src={stadium} alt="company" width="360" height="200" className=''/></div>
-<div className="d-flex justify-content-center mt-3  ">
+      <div className="card  mt-5 bg-card pt-5" style={{width:'40%'}}>
 
-<RxDimensions size={26} /><span className="ms-1 h6 mt-1  ">Dimension : {props.dimension} m</span>
-</div>
-<div className="d-flex justify-content-center mt-3  ">
+        <div className='d-flex justify-content-center h3'>
 
-<RiTeamFill size={24} className='' /><span className="ms-1 h6 mt-1  ">Number of players per team : {props.number} </span>
-</div>
-<div className="d-flex justify-content-center mt-3  ">
+        {Stadium.name}
+          </div>
+        <div className='d-flex justify-content-center my-3 h4'>
 
-<MdFilterAlt size={26} /><span className="ms-1 h6 mt-1  ">Generation of synthetic turf : {props.generation}{(props.generation==1)?'st':(props.generation==2)?'nd':(props.generation==3)?'rd':'th'} generation</span>
-</div>
-<div className="d-flex justify-content-center mt-3  ">
+        Stadium {data.name}
 
-<GiLightBulb size={24} /><span className="ms-1 h6 mt-1  ">Led lighting : {(props.led)?'YES':'NO'}</span>
-</div>
-<div className="d-flex justify-content-center mt-3  ">
-
-<RiMoneyDollarCircleFill style={{position:'relative',top:'3px'}} size={24} /><span className="ms-1 h6 mt-1  ">Price : {props.price} DT</span>
-</div>
-<div className="d-flex justify-content-center mt-3  ">
-
-<GiDuration size={24} style={{position:'relative',top:'3px'}} /><span className="ms-1 h6 mt-1  ">Duration : {props.duration} minutes</span>
-</div>
-<div className="d-flex justify-content-center mt-3 mb-4  ">
-
-<button className="btn-12 text-white px-5 pt-1" onClick={()=>{history(`/user/stadium/${props.id_company}/${props.id}`)}} ><IoCalendarOutline size={20} className='position-relative'  style={{bottom:'3px'}}/><span className="ms-1 h6  ">Show Calendar</span></button>
-</div>
-<div className="modal fade"  id="exampleModal1" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div className="modal-dialog">
-    <div className="modal-content">
-      <div className="modal-header">
-      <div className='d-flex justify-content-end'>
-        <button type="button" className="btn-close bordering2 " data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
+          </div>
         <div className='d-flex justify-content-center'>
-        <div className=" d-flex justify-content-center "  style={{fontSize:'22px'}} id="exampleModalLabel">Calendar</div></div>
-        </div>
+
+        <div className=" d-flex justify-content-center mb-3"  style={{fontSize:'22px'}} id="exampleModalLabel">Calendar</div></div>
         <div className="modal-body">
         <div className='d-flex justify-content-center'>
         <Calendar minDate={new Date()} onChange={handleDateChange}  />
@@ -347,24 +412,13 @@ const generatePDF = async (id,a,b,c,d) => {
         </div>
         </div>
         <div className="modal-footer">
-        <div className='d-flex justify-content-center'>
+        <div className='d-flex justify-content-center my-3'>
 <div className="h5">Times</div>
         </div>
         <div className='d-flex justify-content-center row'>
-                {/* {props.times.map((e,i)=>calender.map((ti,ind)=>{return(
-
-((ti.date==selectedDate)&&(e==ti.hour))?
-<div className="h6 bordering mx-2 reserved"   data-bs-toggle="modal" data-bs-target="#exampleModal2">{e}</div>
-:
-<div className="h6 bordering mx-2 "  data-bs-toggle="modal" data-bs-target="#exampleModal2">{e}</div>
-                )
-
-})
-
-                )} */}
-
-{props.times
-  .filter((timeSlot) => timeSlot.id == inweek)
+              
+        {
+  ti.filter((timeSlot) => timeSlot.id == inweek)
   .map((timeSlot) => {
     return timeSlot.times.map((time) => {
       const isReserved = calender.some((reservation) => {
@@ -375,7 +429,7 @@ const generatePDF = async (id,a,b,c,d) => {
       });
 
       const isMine = my.some((reservation2) => {
-        return reservation2.date == selectedDate && reservation2.hour == time && reservation2.id_stadium == props.id ;
+        return reservation2.date == selectedDate && reservation2.hour == time && reservation2.id_stadium == data.id ;
       });
   
       const className = isReserved || (overs.includes(time) && selectedDate === today) ? 'reserved' : '';
@@ -406,24 +460,25 @@ const generatePDF = async (id,a,b,c,d) => {
         </div>
       );
     });
-  })}
+  })}   
+
 
 
 
         </div>
         <hr/>
-        <div className='d-flex justify-content-start mt-3'>
-<img src={elipse2} alt="elipse2" width="25" height="25"/><span className="h5 ms-2">Available</span>        </div>
-        <div className='d-flex justify-content-start mt-3'>
+        <div className='d-flex justify-content-center mt-3'>
+<img src={elipse2} alt="elipse2" width="25" height="25"/><span className="h5 ms-2">Available</span>        
+        <div className=' ms-3'>
 <img src={elipse1} alt="elipse1" width="25" height="25" /> <span className="h5 ms-2">Unavailable</span>        </div>
-        <div className='d-flex justify-content-start mt-3'>
+        <div className=' ms-3'>
 <img src={elipse3} alt="elipse1" width="25" height="25" /> <span className="h5 ms-2">My Reservation</span>        </div>
         </div>
+        </div>
        
-        </div>
-        </div>
-        </div>
-<div className="modal fade "  id="exampleModal2" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+       
+
+        <div className="modal fade "  id="exampleModal2" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div className="modal-dialog">
     <div className="modal-content">
       <div className="modal-header">
@@ -432,7 +487,7 @@ const generatePDF = async (id,a,b,c,d) => {
         </div>
         <div className='d-flex justify-content-center mt-4 pt-2'>
         <div className=" d-flex justify-content-center "  style={{fontSize:'18px'}} id="exampleModalLabel"><span ><RiQuestionnaireFill size={35} className='position-relative' style={{bottom:'2px'}}/></span>
-<span className="ms-2"> Are you sure to reserve {props.nom} ({props.company}) on {selected} From {time} to {endtime} ?</span></div></div>
+<span className="ms-2"> Are you sure to reserve Stadium {data.name} ({Stadium.name}) on {selected} From {time} to {endtime} ?</span></div></div>
         <div className='d-flex justify-content-center mt-4 pt-2'>
         <div className=" d-flex justify-content-center " >
             <button className='btn-15' onClick={sendreservation} data-bs-toggle="modal" data-bs-target="#exampleModal1">Yes</button>
@@ -448,7 +503,12 @@ const generatePDF = async (id,a,b,c,d) => {
         </div>
 
 </div>
+</div>
+<br/>
+<br/>
+<br/>
+</>
   )
 }
 
-export default CardStadium
+export default Calend

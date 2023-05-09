@@ -37,7 +37,7 @@ const DAYS_OF_WEEK = [
     { id:'7',name: 'Saturday', times: [] },
     { id:'1', name: 'Sunday', times: [] },
   ];
-const StadiumCompany = () => {
+const Adding = () => {
   const [times, setTimes] = useState(DAYS_OF_WEEK);
 
 
@@ -164,8 +164,7 @@ fetch('http://localhost:4002/stadium/add', {
         .then(() => {
 
            get2();
-
-           document.getElementById('changed5').click();
+history('/company/stadium')
         })
         .catch(err => console.error(err));
     
@@ -352,43 +351,13 @@ setlength(i[1]);
     
     }
 
+  
+    
+   
 
   return (
     <>
-  
-    <div className="modal fade" id="exampleModal31" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-    <div className='d-flex justify-content-end'>
-      <button type="button" className="btn-close bordering2" id='colsin' data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      
-      <div className='d-flex justify-content-center'>
-      <div class="modal-title text-center  "  style={{fontSize:'22px'}} id="exampleModalLabel">Delete Stadium</div></div>
-    </div>
-    <div class="modal-body">
-    <div class="d-flex justify-content-center ms-3">
-
-<h5>   Are you Sure to delete this Stadium ?
-</h5>
-   </div>
-   </div>
-    <hr/>
-    <div class="d-flex justify-content-center ms-3">
-
-    <div class="mt-2 mb-4  ">
-    <button type="button" class="btn-9  " style={{fontSize:'18px'}} onClick={del}   >Valider</button>
-      <button type="button" id='close' class="btn-10  ms-3" style={{fontSize:'18px'}} data-bs-dismiss="modal">Close</button>
-    </div>
-    </div>
-  </div>
-</div>
-
-
-</div>
-    <div  className=' row w-100'>
+     <div  className=' row w-100'>
       <div className="col-3">
       <div className=" d-flex justify-content-start ">
     <div className="navbar-container my_bg w-25">
@@ -440,168 +409,141 @@ setlength(i[1]);
 
 
 </span> 
-</div><div className=' d-flex justify-content-center  ms-5 row'>
-
-<div className='d-flex justify-content-center ms-5 row  '>
-<div className='row w-100'>
-
-
-{(status=='500')?<div className='d-flex justify-content-center ms-1 mt-5 h5 pt-5'>There is no Stadium</div>:
-
-(stadiums.length!==0)? stadiums.map((e,i)=>{
-  return(
-  <><div className="col-6 " >
-{/* <CardStadium id={e.id} del={e.id} id_user={'0000'} user_name={`admin`} id_company={stadiums[0].id} nom={e.name} company={stadiums[0].name} times={e.times} dimension={e.dimension} duration={e.duration} price={e.price} number={e.numberofplayers} generation={e.generation} led={e.ledlighting} /> */}
-
-{stadiums &&
-      <div className="card  mt-5 bg-card pt-5" >
-<div className="d-flex justify-content-center   ">
- 
-
-<span className='h5 pt-4'>{e.name}</span>
 </div>
-<div className="d-flex justify-content-center mt-3  ">
+    
+   
+    <div className='d-flex justify-content-center'> 
 
-<img src={stade} alt="company" width="360" height="200" className=''/></div>
-<div className="d-flex justify-content-center mt-3  ">
+    <div className='card w-50 p-5'>
+    <div className='d-flex justify-content-center'> 
 
-<RxDimensions size={26} /><span className="ms-1 h6 mt-1  ">Dimension : {e.dimension} m</span>
+               <u className="h5" style={{textUnderlineOffset:'5px'}}>Add Stadium</u>
 </div>
-<div className="d-flex justify-content-center mt-3  ">
-
-<RiTeamFill size={24} className='' /><span className="ms-1 h6 mt-1  ">Number of players per team : {e.numberofplayers} </span>
-</div>
-<div className="d-flex justify-content-center mt-3  ">
-
-<MdFilterAlt size={26} /><span className="ms-1 h6 mt-1  ">Generation of synthetic turf : {e.generation}{(e.generation==1)?'st':(e.generation==2)?'nd':(e.generation==3)?'rd':'th'} generation</span>
-</div>
-<div className="d-flex justify-content-center mt-3  ">
-
-<GiLightBulb size={24} /><span className="ms-1 h6 mt-1  ">Led lighting : {(e.ledlighting)?'YES':'NO'}</span>
-</div>
-<div className="d-flex justify-content-center mt-3  ">
-
-<RiMoneyDollarCircleFill style={{position:'relative',top:'3px'}} size={24} /><span className="ms-1 h6 mt-1  ">Price : {e.price} DT</span>
-</div>
-<div className="d-flex justify-content-center mt-3  ">
-
-<GiDuration size={24} style={{position:'relative',top:'3px'}} /><span className="ms-1 h6 mt-1  ">Duration : {e.duration} minutes</span>
-</div>
-
-<span className="d-flex justify-content-start ms-4 mt-3 mb-4  ">
-
-<button className="btn-12 text-white px-5 pt-1" onClick={()=>{            history(`/company/stadium/update/${e.id}`)}}  ><RxUpdate size={20} className='position-relative'  style={{bottom:'3px'}}/><span className="ms-1 h6  ">Update</span></button>
-</span>
-
-
-</div>
-
-  
-              }
-<span className="d-flex justify-content-end me-3">
-<button className="btn-12 ms-3 text-white px-5 pt-1 position-relative"  onClick={()=>{setdeletee(e.id)}} style={{background:'red',borderColor:'red',bottom:'62px'}}  data-bs-toggle="modal" data-bs-target="#exampleModal31"><AiOutlineDelete size={20} className='position-relative'  style={{bottom:'3px'}}/><span className="ms-1 h6  ">Delete</span></button>
-</span>
-
-</div>
-<div className="modal fade" id="exampleModal11" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-
-<div class="modal-dialog">
-  <div class="modal-content">
-    <div class="modal-header">
-    <div className='d-flex justify-content-end'>
-      <button type="button" className="btn-close bordering2" id='colsi' data-bs-dismiss="modal" aria-label="Close"></button>
+<div className="d-flex justify-content-center ms-4 ">
+       
+              <form autoComplete='off' required>
+                <div class="mb-1">
+                  <label for="recipient-name" class="h6">Name :</label>
+                  <input  style={{fontSize:'17px'}} type="text"  onChange={(e)=>{setStadium({ ...stadium, name:e.target.value} )}}  placeholder="Entrer Name of stadium" class="form-control" id="name" />
+                </div>
+      
+                <div class="mb-1 pt-3">
+                  <label for="recipient-name" class="h6">Dimension:</label>
+                  <input  style={{fontSize:'17px',width:'30%'}} onChange={(e)=>{setlength(e.target.value )}} type="text"  placeholder="Length" class="form-control d-inline-block ms-3" id="prénom" />
+                 <span className="h5 ms-2 me-2">X</span> <input  onChange={(e)=>{setwidth(e.target.value )}}  style={{fontSize:'17px',width:'30%'}} type="text"  placeholder="Width" class="form-control d-inline-block" id="prénom" />
+                </div>
+      
+                <div class="mb-1 pt-3">
+                  <label for="recipient-name" class="h6">Number of players per team :</label>
+                  <input style={{fontSize:'17px'}} onChange={(e)=>{setStadium({ ...stadium, number:e.target.value} )}} placeholder="Number of players per team" class="form-control" id="email" />
+               </div>
+                <div class="mb-1 pt-3">
+                  <label for="recipient-name" class="h6">Price :</label>
+                  <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Price" onChange={(e)=>{setStadium({ ...stadium, price:e.target.value} )}} aria-label="Recipient's username" aria-describedby="basic-addon2" />
+        <span class="input-group-text" id="basic-addon2">DT</span>
       </div>
       
-      <div className='d-flex justify-content-center'>
-      <div class="modal-title text-center  "  style={{fontSize:'22px'}} id="exampleModalLabel">Update Stadium</div></div>
-    </div>
-    <div class="modal-body">
-     
-    </div>
-    <hr/>
-   
-  </div>
-</div>
-
-
-</div>
-</>
-  )
-
-}):<>
-<div className="d-flex justify-content-center position-relative" style={{top:'200px'}}>
-<div class="spinner-border" role="status">
-
-</div> </div>
-<div className="d-flex justify-content-center position-relative" style={{top:'220px'}}>
-
-<div className='h3'>Loading</div>
-</div>
-</>}  
-
-      <div className="col-6"><div className="card  mt-5 bg-card pt-5" style={{cursor:'pointer',height:'684px'}} onClick={()=>{history('/company/stadium/add')}}>
-<div className="d-flex justify-content-center uuuui  "  >
- <RiAddCircleFill size={80} />
-    </div>
-    </div></div>
-      </div>
-      </div>
-      </div>
-<div className=" ">   
-
-
-
-
-</div>
-   
-        
-       
-        </div>
-
-
-
-        {/* <div className='def'>
-          <Link to='/' >Sousse football Academy</Link>
-       </div>
-        <div className='title'>
-          <GrOverview  className='icon'/>
-           <h1>Overview</h1>
-        </div>
-        <div className='container'>
-          <div className='cards'>
-            <div className='card'>
-              <h2>Avis</h2>
-              <div>
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              <AiFillStar />
-              </div>
+               </div>
+               
               
-            </div>
+                <div class="mb-1 pt-3">
+                  <label for="recipient-name" class="h6">Generation of synthetic turf:</label>
+                  <select class="form-select" onChange={(e)=>{setStadium({ ...stadium, generation:e.target.value} )}} aria-label="Default select example">
+        <option className='h6' selected>Open this select menu</option>
+        <option className='h6' value="1">1st</option>
+        <option className='h6' value="2">2nd</option>
+        <option className='h6' value="3">3rd</option>
+        <option className='h6' value="4">4th</option>
+        <option  className='h6' value="5">5th</option>
+        <option className='h6' value="6">6th</option>
+      </select>          </div>
+      <div class="mb-1 pt-3">
+                  <label for="recipient-name" class="h6">LED lighting :</label>
+                  <br/>
+                  <div className="d-flex justify-content-center">
+                  <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" onChange={(e)=>{setStadium({ ...stadium, led:true} )}}  name="inlineRadioOptions" id="inlineRadio1" value="true" />
+        <label class="form-check-label h6" for="inlineRadio1">True</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" onChange={(e)=>{setStadium({ ...stadium, led:false} )}} name="inlineRadioOptions" id="inlineRadio2" value="false" />
+        <label class="form-check-label h6"  for="inlineRadio2">False</label>
+      </div>
+      </div>
+      <div class="mb-1 pt-3">
+                  <label for="recipient-name" class="h6">Duration :</label>
+                  <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Duration" onChange={(e)=>{setStadium({ ...stadium, duration:e.target.value} )}} aria-label="Recipient's username" aria-describedby="basic-addon2" />
+        <span class="input-group-text" id="basic-addon2">minutes</span>
+      </div>
+      
+               </div>
+               <hr/>
+               <div className="d-flex justify-content-center">
+               <h4>Times</h4></div>
+      <div>
+            {times.map((day, dayIndex) => (
+              <div key={day.name} className="day">
+                <h5>{day.name}</h5>
+                {day.times.map((time, timeIndex) => (
+                  <div className="d-flex justify-content-center">
+                  <div key={`${day.name}-${timeIndex}`} className="time ">
+                    <label htmlFor={`${day.name}-${timeIndex}-start`}>
+                      Start time:
+                    </label>
+                    <input
+                      id={`${day.name}-${timeIndex}-start`}
+                      type="time"
+                      value={time.startTime}
+                      onChange={(event) =>{
+                          handleTimeChange(dayIndex, timeIndex, event.target.value);
+                          }
+                        }
+                      className="time-input"
+                    />
+                    
+                    <button
+                      type="button" style={{width:'15px',bottom:'6px'}} className='btn d-inline-block position-relative  '
+                      onClick={() => handleDeleteTime(dayIndex, timeIndex)}
+                    >
+                      <MdDelete size={26} />
+                    </button>
+                  </div>
+                  </div>
+                ))}
+                <button type="button" style={{width:'35px',height:'40px'}} className='btn d-inline-block position-relative border-1 border-dark p-2' onClick={() => handleaddTime(dayIndex)}>
+                 <img src={add} width='25' height='25' alt="" style={{bottom:'2.5px',right:'2.6px'}} className=' position-relative'/>
+                </button>
+              </div>
+            ))}
+            
+               </div>
+               </div>
+            
+      
+              
+              </form>          </div>
 
-            <div className='card'>
-              <h2>Number of Stadiums</h2>
-              <h1>2</h1>
+            <hr/>
+            <div class="d-flex justify-content-center ms-3">
+      
+            <div class="mt-2 mb-2  ">
+            <button type="button" class="btn-9  " style={{fontSize:'18px'}} onClick={send}  >Valider</button>
+              <button type="button" id='close' class="btn-10  ms-3" style={{fontSize:'18px'}} data-bs-dismiss="modal">Close</button>
             </div>
-
-            <div className='card'>
-              <h2>Reservations</h2>
-              <h1>20</h1>
             </div>
-          </div> */}
         </div>
-    
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
+      </div>
+      
+      
+          </div>
+    </div>
+ <br/>
+ <br/>
+ <br/>
     </>
   )
-  
 }
 
-export default StadiumCompany
+export default Adding

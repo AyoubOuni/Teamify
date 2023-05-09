@@ -292,8 +292,16 @@ const drop=(e) => {
   <form autoComplete='off' required>
   <div className="mb-1">
       <label htmlFor="recipient-name" className="h6 ms-3">Post</label>
-      <div className="d-flex justify-content-start">
-      <input type="text" value={contents} onKeyDown={handleKeyDown2}  onChange={(e)=>{setcontents(e.target.value)}}  className='input0 ps-3 position-relative'  />
+      <div className="cont">
+      <InputEmoji
+placeholder='What’s on your mind ?' onKeyDown={handleKeyDown2} className='input0 ps-3 position-relative' style={{left:'80px',zIndex:'10000000000',verticalAlign: 'bottom'
+}}
+          cleanOnEnter
+value={contents}
+           onChange={setcontents}
+           theme='dark'
+            
+        />
       </div>
       {(postisvalide===false)?<div  className="text-danger text-center mt-3 h6 text-nowrap text position-relative ">Invalide Post</div>:""}
 

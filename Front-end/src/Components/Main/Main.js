@@ -25,6 +25,9 @@ import Reservation2 from '../Company/reservation/Reservation';
 import Pictures from '../Company/Pictures/Pictures';
 import Setting from '../Company/Setting/Setting';
 import Add from '../Company/stadium/Add';
+import Calend from '../User/Stadiumprofile/Calend';
+import DD from '../Company/calendar/DD';
+import Adding from '../Company/stadium/Adding';
 
 function Main(props) {
     return (
@@ -43,6 +46,7 @@ function Main(props) {
                 <Route path='/company/' element={<HomeCompany/>}></Route>
                 <Route path='/company/stadium' element={<StadiumCompany/>}></Route>
                 <Route path='/company/stadium/update/:iid' element={<Add/>}></Route>
+                <Route path='/company/stadium/add' element={<Adding/>}></Route>
                 <Route path='/company/setting' element={<Setting/>}></Route>
                 <Route path='/company/pictures' element={<Pictures/>}></Route>
                 <Route path='/company/calendar' element={<Calender/>}></Route>
@@ -51,6 +55,8 @@ function Main(props) {
                 <Route path='/user/reservation' element={<Reservation/>}></Route>
                 <Route path='/user/profile' element={<Account/>}></Route>
                 <Route path='/user/stadium/:id' element={<Stadiumprofile/>}></Route>
+                <Route path='/user/stadium/:id/:uid' element={<Calend/>}></Route>
+                <Route path='/company/stadium/:id/:uid' element={<DD/>}></Route>
                 <Route path='/user/search/:name' element={<SearchStadium/>}></Route>
                 <Route path='/user/search/' element={<Searching/>}></Route>
             </Routes>

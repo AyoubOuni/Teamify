@@ -2,6 +2,7 @@ import React,{useEffect} from 'react'
 import './home.css'
 import vector from './Vector.png'
 import subtract from './c.png'
+import e from './e.png'
 import group from './Group.png'
 import { Link } from 'react-router-dom'
 import { GrOverview } from 'react-icons/gr'
@@ -21,8 +22,9 @@ const HomeCompany = () => {
   const [selectedButton, setSelectedButton] = useState(null);
   const [company, setcompany] = useState([]);
   const [avis, setavis] = useState([]);
-  const [values, setvalues] = useState();
+  const [values, setvalues] = useState(0);
   const [numbers, setnumbers] = useState(0);
+  const [client, setclient] = useState(0);
   const [reserv, setreserv] = useState(0);
   const [view, setview] = useState(0);
 useEffect(()=>{ 
@@ -90,6 +92,15 @@ await   fetch('http://localhost:4002/stadium/getnumberbycompany', {
 
 
 }
+function countDistinctClients(objects) {
+  let uniqueClients = {};
+  
+  objects.forEach((obj) => {
+    uniqueClients[obj.id_user] = true;
+  });
+  
+  return Object.keys(uniqueClients).length;
+}
 const get4=async() =>{
 await   fetch('http://localhost:4002/reservation/getbycompany', {
    method: 'POST',
@@ -108,7 +119,12 @@ await   fetch('http://localhost:4002/reservation/getbycompany', {
  .then(function(myJson) {
   // console.log(myJson[0]);
   setreserv(myJson.length);
-  console.log(myJson.length);
+  const distinctClients = countDistinctClients(myJson);
+
+
+  setclient(distinctClients)
+  console.log(myJson);
+  console.log(`reservation is ${distinctClients}`);
  });
 
 
@@ -133,11 +149,16 @@ const get3=() =>{
     // console.log(myJson[0]);
     setavis(myJson[0]);
     console.log(myJson[0])
-    setvalues(myJson[0].avis/myJson[0].number)
+    if(isNaN(myJson[0].avis/myJson[0].number)){
+      setvalues(0)
+    }
+    else{    setvalues(myJson[0].avis/myJson[0].number)}
+
    });
   
   
   }
+  
 const get5=() =>{
      fetch('http://localhost:4000/getview', {
      method: 'POST',
@@ -234,8 +255,11 @@ const get5=() =>{
 
 </div>
         <div className='h3 ms-5'><img src={vector} alt="" /> Overview </div>
-        <div className='row d-flex justify-content-center mt-4'>
-        <div className='col-3 border border-2 rounded-3 border-primary ms-2 p-4'>
+        <div className='ms-4 ps-1'>
+        <div className='ms-5 ps-5'>
+
+        <div className='row  d-flex justify-content-center mt-4  pt-2'>
+        <div className='col border border-2 rounded-3 border-primary ms-2 p-4'>
 <div className="d-flex justify-content-center h5 text-primary">Avis</div>
 <div className="d-flex justify-content-center h5 text-primary">   
  {values && <ReactStars
@@ -252,29 +276,37 @@ const get5=() =>{
 
         </div>
         
-        <div className='col-3 border border-2 rounded-3 border-primary ms-2 p-4'>
-        <div className="d-flex justify-content-center h5 text-primary">Number of stadium</div>
-        <div className="d-flex justify-content-center h2 text-primary">{numbers}</div>
+        <div className='col border border-2 rounded-3 border-primary ms-2 p-4'>
+        <div className="d-flex justify-content-center h5 text-primary">Number of view</div>
+        <div className="d-flex justify-content-center h2 text-primary">{view}</div>
 
 
         </div>
         
-        <div className='col-3 border border-2 rounded-3 border-primary ms-2 p-4'>
+        <div className='col border border-2 rounded-3 border-primary ms-2 p-4'>
         <div className="d-flex justify-content-center h5 text-primary text-nowrap">Number of reservation</div>
         <div className="d-flex justify-content-center h2 text-primary">{reserv}</div>
 
         </div>
         
+        
         </div>
-        <div className='mt-5 pt-2 d-flex justify-content-center'>
+        </div>
+        </div>
+        <div className='mt-5 pt-2 d-flex justify-content-center ms-5 ps-5'>
         <div className='ms-5 position-relative' >
 <img src={subtract} alt="" />
 <div className="position-absolute h5 text-center " style={{bottom:'109px',left:'30px'}}>Weekly Balance</div>
 <div className="position-absolute h2 text-center " style={{bottom:'59px',left:'50px'}}>{reserv * 10} DT</div>
 </div>
-<div className='ms-5 position-relative' style={{bottom:'9px'}}><img src={group} alt="" />
-<div className="position-absolute h5 text-center " style={{bottom:'97px',left:'30px'}}>Number of View</div>
-<div className="position-absolute h2"  style={{bottom:'49px',left:'99px'}}>{view}</div>
+        <div className='ms-5 position-relative' >
+<img src={e} alt="" />
+<div className="position-absolute h5 text-center " style={{bottom:'109px',left:'30px'}}>Number of stadium</div>
+<div className="position-absolute h2 text-center " style={{bottom:'59px',left:'50px'}}>{numbers}</div>
+</div>
+<div className='ms-5 position-relative' style={{bottom:'13px'}}><img src={group} alt="" />
+<div className="position-absolute h5 text-center " style={{bottom:'97px',left:'30px'}}>Number of client</div>
+<div className="position-absolute h2"  style={{bottom:'49px',left:'99px'}}>{client}</div>
 </div>
 
         </div>

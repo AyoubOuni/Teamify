@@ -147,6 +147,17 @@ background-color: #0C82EE;
             top: 61px !important;
             z-index: 250;
     }
+   .cont .react-emoji-picker--wrapper {
+    
+            top: 61px !important;
+            z-index: 250;
+    }
+   .cont .react-emoji {
+    width: 100% !important; 
+    position: relative;
+    bottom: 0px; 
+     left: 0px; 
+}
 
     .yy22{
         position: relative;

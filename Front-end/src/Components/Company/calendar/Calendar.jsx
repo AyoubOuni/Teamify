@@ -6,9 +6,11 @@ import { Link } from 'react-router-dom'
 
 import { useState,useEffect } from 'react'
 import teamify from './../../../Assets/images/Teamify.png'
+import s from './../../../Assets/images/s.png'
 
 import {AiFillSetting} from 'react-icons/ai'
 import {CgLogOut} from 'react-icons/cg'
+import {IoCalendarOutline} from 'react-icons/io5'
 import { NavLink,useNavigate} from 'react-router-dom'
 
 
@@ -60,6 +62,7 @@ useEffect(()=>{
     
     
     }
+    
   const [activeNav,setActiveNav] = React.useState('/company/calendar')
   const [company, setcompany] = useState([]);
  
@@ -169,17 +172,24 @@ function deleteAllCookies() {
 
 
 </div>
-        <div className='  d-flex justify-content-center mt-4 ms-5 row gy-5  pt-4'>
-        <div className='  d-flex justify-content-center mt-4 ms-5 row gy-5 -4'>
+        <div className='  d-flex justify-content-center  ms-5 row gy-5  pt-4'>
+        <div className='  d-flex justify-content-center mt-5 ms-5 row gy-5 -4'>
 
 
 {(status=='500')?<div className='d-flex justify-content-center ms-1  mt-5 h5 pt-5'>There is no Stadium</div>:
 
 (stadiums.length!==0)? stadiums.map((e,i)=>{
   return(
-  <><div className="col-5 d-flex justify-content-center ms-1 mb-5 mt-5 yesuu" style={{height:'400px'}}>
-          <div className="mt-5 card  bg-primary yes  "  >        <div className='d-flex justify-content-center my-3 '>
- <div className="h5 text-white ">{e.name}</div> </div>   <div className='d-flex justify-content-center  '>          <Crr id={e.id} times={e.times} nom={e.name} id_company={company.id} company={company.name} id_user={'0000'} />
+  <><div className="col-5 d-flex justify-content-center ms-1 mb-1 mt-4 yesuu" style={{height:'300px'}}>
+          <div className=" card  bg-secondary yes w-100 "  >        
+          <div className='d-flex justify-content-center my-3 '>   <div className="h5 text-white ">Stadium {e.name}</div> </div> 
+          <div className='d-flex justify-content-center mb-2 '>   <img src={s} width='150' height='150'/> </div> 
+
+
+  <div className='d-flex justify-content-center mb-3 '>  
+ <button className="btn-12 text-white px-5 pt-1" onClick={()=>{history(`/company/stadium/${company.id}/${e.id}`)}} ><IoCalendarOutline size={20} className='position-relative'  style={{bottom:'3px'}}/><span className="ms-1 h6  ">Show Calendar</span></button>
+
+         {/* <Crr id={e.id} times={e.times} nom={e.name} id_company={company.id} company={company.name} id_user={'0000'} /> */}
 </div> 
           
       
