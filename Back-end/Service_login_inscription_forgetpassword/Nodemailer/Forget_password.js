@@ -4,7 +4,7 @@ var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: 'teamify.service@gmail.com',
-      pass: 'jbdmrjisvtcqdecb'
+      pass: ''
     },tls: {
         // do not fail on invalid certs
         rejectUnauthorized: false
